@@ -1,61 +1,72 @@
-# LangChain Basic Project
+# LangChain + Supabase Online Embedding Demo
 
-This project uses LangChain with Ollama for language model operations and vector embeddings.
+## Summary
+This project demonstrates how to use LangChain with Ollama for generating embeddings and storing them online in Supabase using the pgvector extension. It supports interactive CLI querying and vector similarity search.
 
-## Environment Setup
+## Features
+- **Supabase Integration:**
+  - Embeddings and metadata are stored in a Supabase PostgreSQL table with pgvector.
+  - Utility functions for inserting and querying embeddings.
+- **Vector Search:**
+  - Fast nearest-neighbor search using pgvector’s `<->` operator.
+- **Interactive CLI:**
+  - `main.py` allows multi-question input until you type 'q' to quit.
+  - Each question is embedded, searched against Supabase, and answered using the most relevant document.
 
-### Prerequisites
-- Python 3.8 or higher
-- Ollama installed and running locally on port 11434
+## Setup Instructions
 
-### Setup Instructions
+### 1. Enable pgvector in Supabase
+Run this in the Supabase SQL editor:
+```sql
+CREATE EXTENSION IF NOT EXISTS vector;
+```
 
-1. **Activate the virtual environment:**
-   ```bash
-   source activate.sh
-   ```
-   
-   Or manually:
-   ```bash
-   source venv/bin/activate
-   ```
+### 2. Create the Embeddings Table
+Adjust the vector dimension to match your embedding size (e.g., 768 or 1024):
+```sql
+CREATE TABLE embeddings (
+  id text PRIMARY KEY,
+  embedding vector(1024),
+  document text
+);
+```
 
-2. **Install dependencies (if not already installed):**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 3. Environment Variables
+Set your Supabase credentials in `.env.local` or your shell:
+```
+SUPABASE_URL=your-supabase-url
+SUPABASE_KEY=your-supabase-key
+```
 
-3. **Deactivate the environment when done:**
-   ```bash
-   deactivate
-   ```
-
-## Dependencies
-
-- `langchain` - Core LangChain framework
-- `langchain-ollama` - Ollama integration for LangChain
-- `langchain-chroma` - ChromaDB vector store integration
-- `pandas` - Data manipulation and analysis
-
-## Project Files
-
-- `main.py` - Main application script
-- `embedding.py` - Embedding functionality (referenced in main.py)
-- `realistic_restaurant_reviews.csv` - Sample data file
-- `requirements.txt` - Python dependencies
-- `activate.sh` - Convenience script for environment activation
+### 4. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
 ## Usage
 
-Make sure Ollama is running locally, then:
-
+### Store Embeddings
+Run `embedding.py` to generate and store embeddings in Supabase:
 ```bash
-source activate.sh
-python main.py
+python embedding.py
 ```
 
-## Notes
+### Interactive Query
+Run `main.py` and ask questions interactively:
+```bash
+python main.py
+```
+Type 'q' to quit.
 
-- The project assumes Ollama is running on `http://localhost:11434`
-- The embedding model used is `mxbai-embed-large`
-- The language model used is `llama3.1`
+## How It Works
+- Embeddings are generated using LangChain/Ollama and stored in Supabase.
+- When you ask a question, its embedding is computed and the most similar document is retrieved from Supabase using vector similarity search.
+- The answer is generated using the retrieved document and your question.
+
+## Troubleshooting
+- Ensure pgvector is enabled and your table uses the correct vector dimension.
+- Make sure your Supabase credentials are set.
+- If you change the embedding size, update the table schema accordingly.
+
+## Contributing
+Pull requests are welcome! See the PR for details on features and setup.
