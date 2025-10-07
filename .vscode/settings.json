@@ -1,0 +1,54 @@
+{
+  "files.exclude": {
+    "out": true,
+    "dist": true,
+    "**/*.pyc": true,
+    ".nyc_output": true,
+    "obj": true,
+    "bin": true,
+    "**/__pycache__": true,
+    "**/node_modules": true,
+    ".vscode-test": false,
+    ".vscode test": false,
+    "**/.mypy_cache/**": true,
+    ".venv": true,
+    ".ipynb_checkpoints": true,
+    ".pytest_cache": true,
+    "scripts": true,
+  },
+  "search.exclude": {
+    "out": true, // set this to false to include "out" folder in search results
+    "dist": true,
+    "**/node_modules": true,
+    "coverage": true,
+    "languageServer*/**": true,
+    ".vscode-test": true,
+    ".vscode test": true,
+    "**/__pycache__": true
+  },
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[JSON]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[YAML]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[BASH]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "python.languageServer": "None",
+  "git.branchRandomName.enable": true,
+  "git.branchProtection": ["master", "release/*"],
+  "git.pullBeforeCheckout": true,
+  "git.mergeEditor": true,
+  "python.defaultInterpreterPath": "/g/data/ey6/shizuka/PhD/Study02/FixMatch-MixMatch-Longitudinal/venv/bin/python3",
+}

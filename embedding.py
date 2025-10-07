@@ -1,5 +1,6 @@
 from langchain_ollama import OllamaEmbeddings
 import chromadb
+from supabase_utils import insert_embedding
 
 documents = [
   "Llamas are members of the camelid family meaning they're pretty closely related to vicuñas and camels",
@@ -19,8 +20,10 @@ collection = client.create_collection(name="docs")
 # store each document in a vector embedding database
 for i, d in enumerate(documents):
   embedding_vector = embeddings.embed_query(d)
-  collection.add(
-    ids=[str(i)],
-    embeddings=[embedding_vector],  # Note: ChromaDB expects a list of embeddings
-    documents=[d]
+  # Store embedding in Supabase
+  insert_embedding(
+    table="embeddings",  # Change to your Supabase table name
+    doc_id=str(i),
+    embedding=embedding_vector,
+    document=d
   )
